@@ -3,7 +3,7 @@ import { Readable, Writable } from "stream"
 
 export function streamToBuffer(stream: Readable): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    let buffer = new Buffer("")
+    let buffer = Buffer.from("")
     stream.on("data", (chunk) => buffer = Buffer.concat([buffer, chunk]))
     stream.on("error", (e) => reject(e))
     stream.on("end", () => resolve(buffer))

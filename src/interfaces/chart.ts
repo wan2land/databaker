@@ -6,3 +6,12 @@ export interface BarChartOptions {
   textColor: string
   barColors: string[]
 }
+
+
+export interface LineChartOptions {
+  width: number
+  height: number
+  borderColor: string
+  textColor: string
+  lineColors: string[]
+}

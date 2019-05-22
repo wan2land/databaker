@@ -2,19 +2,19 @@ import { createCanvas } from "canvas"
 import { scaleBand, scaleLinear } from "d3-scale"
 
 import { CanvasImage } from "../image/canvas-image"
-import { BarChartOptions } from "../interfaces/chart"
+import { LineChartOptions } from "../interfaces/chart"
 import { Image } from "../interfaces/image"
 import { drawAxis } from "./utils"
 
-export class BarChart {
+export class LineChart {
 
-  public options: BarChartOptions
+  public options: LineChartOptions
 
-  public constructor(options: Partial<BarChartOptions> = {}) {
+  public constructor(options: Partial<LineChartOptions> = {}) {
     this.options = {
       borderColor: options.borderColor || "#FFFFFF",
       textColor: options.textColor || "#FFFFFF",
-      barColors: options.barColors && options.barColors.length ? options.barColors : [
+      lineColors: options.lineColors && options.lineColors.length ? options.lineColors : [
         "#0074D9",
         "#B10DC9",
         "#7FDBFF",
@@ -58,23 +58,23 @@ export class BarChart {
     // draw axis
     drawAxis(context, width, height, x, y, this.options)
 
-    const bar = scaleBand()
-      .padding(0.2)
-      .rangeRound([0, x.bandwidth()])
-      .domain(Object.keys(datas))
-
+    const xWidth = x.bandwidth() / 2
     datas.forEach((data, dataIndex) => {
-      context.fillStyle = this.options.barColors[dataIndex % this.options.barColors.length]
+      context.beginPath()
+      context.lineWidth = 1.5
+      context.strokeStyle = this.options.lineColors[dataIndex % this.options.lineColors.length]
+      let isFirst = true
       labels.forEach((label, labelIndex) => {
-        if (data[labelIndex]) {
-          context.fillRect(
-            x(label)! + bar(dataIndex + "")!,
-            y(data[labelIndex]),
-            bar.bandwidth(),
-            height - y(data[labelIndex])
-          )
+        if (isFirst) {
+          isFirst = false
+          context.moveTo(xWidth + x(label)!, y(data[labelIndex]))
+        } else {
+          context.lineTo(xWidth + x(label)!, y(data[labelIndex]))
         }
+        // if (data[labelIndex]) {
+        // }
       })
+      context.stroke()
     })
 
     return new CanvasImage(canvas)
