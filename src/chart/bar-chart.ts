@@ -1,5 +1,6 @@
 import { createCanvas } from "canvas"
-import { scaleBand, scaleLinear } from "d3-scale"
+import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale"
+import { schemeCategory10 } from "d3-scale-chromatic"
 
 import { CanvasImage } from "../image/canvas-image"
 import { BarChartOptions } from "../interfaces/chart"
@@ -14,20 +15,7 @@ export class BarChart {
     this.options = {
       borderColor: options.borderColor || "#FFFFFF",
       textColor: options.textColor || "#FFFFFF",
-      barColors: options.barColors && options.barColors.length ? options.barColors : [
-        "#0074D9",
-        "#B10DC9",
-        "#7FDBFF",
-        "#F012BE",
-        "#39CCCC",
-        "#85144b",
-        "#3D9970",
-        "#FF4136",
-        "#2ECC40",
-        "#FF851B",
-        "#01FF70",
-        "#FFDC00",
-      ],
+      barColors: options.barColors,
       width: options.width || 800,
       height: options.height || 400,
     }
@@ -63,8 +51,13 @@ export class BarChart {
       .rangeRound([0, x.bandwidth()])
       .domain(Object.keys(datas))
 
+
+    const colorScale = scaleOrdinal(schemeCategory10)
+    const barColors = this.options.barColors && this.options.barColors.length
+      ? this.options.barColors && this.options.barColors
+      : datas.map((_, index) => colorScale(index + ""))
     datas.forEach((data, dataIndex) => {
-      context.fillStyle = this.options.barColors[dataIndex % this.options.barColors.length]
+      context.fillStyle = barColors[dataIndex % barColors.length]
       labels.forEach((label, labelIndex) => {
         if (data[labelIndex]) {
           context.fillRect(

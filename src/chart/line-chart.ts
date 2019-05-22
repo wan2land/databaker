@@ -1,5 +1,6 @@
 import { createCanvas } from "canvas"
-import { scaleBand, scaleLinear } from "d3-scale"
+import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale"
+import { schemeCategory10 } from "d3-scale-chromatic"
 
 import { CanvasImage } from "../image/canvas-image"
 import { LineChartOptions } from "../interfaces/chart"
@@ -14,20 +15,7 @@ export class LineChart {
     this.options = {
       borderColor: options.borderColor || "#FFFFFF",
       textColor: options.textColor || "#FFFFFF",
-      lineColors: options.lineColors && options.lineColors.length ? options.lineColors : [
-        "#0074D9",
-        "#B10DC9",
-        "#7FDBFF",
-        "#F012BE",
-        "#39CCCC",
-        "#85144b",
-        "#3D9970",
-        "#FF4136",
-        "#2ECC40",
-        "#FF851B",
-        "#01FF70",
-        "#FFDC00",
-      ],
+      lineColors: options.lineColors,
       width: options.width || 800,
       height: options.height || 400,
     }
@@ -58,11 +46,15 @@ export class LineChart {
     // draw axis
     drawAxis(context, width, height, x, y, this.options)
 
+    const colorScale = scaleOrdinal(schemeCategory10)
+    const lineColors = this.options.lineColors && this.options.lineColors.length
+      ? this.options.lineColors && this.options.lineColors
+      : datas.map((_, index) => colorScale(index + ""))
     const xWidth = x.bandwidth() / 2
     datas.forEach((data, dataIndex) => {
       context.beginPath()
       context.lineWidth = 1.5
-      context.strokeStyle = this.options.lineColors[dataIndex % this.options.lineColors.length]
+      context.strokeStyle = lineColors[dataIndex % lineColors.length]
       let isFirst = true
       labels.forEach((label, labelIndex) => {
         if (isFirst) {

@@ -4,7 +4,7 @@ export interface BarChartOptions {
   height: number
   borderColor: string
   textColor: string
-  barColors: string[]
+  barColors?: string[]
 }
 
 
@@ -13,5 +13,5 @@ export interface LineChartOptions {
   height: number
   borderColor: string
   textColor: string
-  lineColors: string[]
+  lineColors?: string[]
 }
