@@ -1,10 +1,15 @@
 
 export { reader } from "./constants/reader"
 
+export * from "./interfaces/chart"
+export * from "./interfaces/image"
+export * from "./interfaces/reader"
+
+export { CanvasImage } from "./image/canvas-image"
+
 export { CsvReader } from "./reader/csv-reader"
 
 export { BarChart } from "./chart/bar-chart"
 
-export { ImageWriter } from "./writer/image-writer"
-
 export * from "./utils/reader"
+export  * from "./utils/stream"

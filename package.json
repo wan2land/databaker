@@ -40,7 +40,8 @@
     "canvas": "^2.5.0",
     "core-js": "^3.0.0",
     "csvtojson": "^2.0.8",
-    "d3": "^5.9.2",
+    "d3-color": "^1.2.3",
+    "d3-scale": "^3.0.0",
     "json5": "^2.1.0"
   },
   "devDependencies": {
