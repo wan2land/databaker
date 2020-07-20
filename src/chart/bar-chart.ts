@@ -1,11 +1,11 @@
-import { createCanvas } from "canvas"
-import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale"
-import { schemeCategory10 } from "d3-scale-chromatic"
+import { createCanvas } from 'canvas'
+import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale'
+import { schemeCategory10 } from 'd3-scale-chromatic'
 
-import { CanvasImage } from "../image/canvas-image"
-import { BarChartOptions } from "../interfaces/chart"
-import { Image } from "../interfaces/image"
-import { drawAxis } from "./utils"
+import { CanvasImage } from '../image/canvas-image'
+import { BarChartOptions } from '../interfaces/chart'
+import { Image } from '../interfaces/image'
+import { drawAxis } from './utils'
 
 export class BarChart {
 
@@ -13,8 +13,8 @@ export class BarChart {
 
   public constructor(options: Partial<BarChartOptions> = {}) {
     this.options = {
-      borderColor: options.borderColor || "#FFFFFF",
-      textColor: options.textColor || "#FFFFFF",
+      borderColor: options.borderColor || '#FFFFFF',
+      textColor: options.textColor || '#FFFFFF',
       barColors: options.barColors,
       width: options.width || 800,
       height: options.height || 400,
@@ -24,7 +24,7 @@ export class BarChart {
   public draw(labels: string[], datas: number[][]): Image {
     const canvas = createCanvas(this.options.width, this.options.height)
 
-    const margin = {top: 20, right: 20, bottom: 30, left: 40}
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 }
     const width = canvas.width - margin.left - margin.right
     const height = canvas.height - margin.top - margin.bottom
 
@@ -40,7 +40,7 @@ export class BarChart {
       .domain([yMin - (yMax - yMin) * 0.03, yMax])
 
     // draw
-    const context = canvas.getContext("2d")
+    const context = canvas.getContext('2d')
     context.translate(margin.left, margin.top)
 
     // draw axis
@@ -53,15 +53,15 @@ export class BarChart {
 
 
     const colorScale = scaleOrdinal(schemeCategory10)
-    const barColors = this.options.barColors && this.options.barColors.length
+    const barColors = this.options.barColors && this.options.barColors.length > 0
       ? this.options.barColors && this.options.barColors
-      : datas.map((_, index) => colorScale(index + ""))
+      : datas.map((_, index) => colorScale(`${index}`))
     datas.forEach((data, dataIndex) => {
       context.fillStyle = barColors[dataIndex % barColors.length]
       labels.forEach((label, labelIndex) => {
         if (data[labelIndex]) {
           context.fillRect(
-            x(label)! + bar(dataIndex + "")!,
+            x(label)! + bar(`${dataIndex}`)!,
             y(data[labelIndex]),
             bar.bandwidth(),
             height - y(data[labelIndex])

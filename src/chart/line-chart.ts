@@ -1,11 +1,11 @@
-import { createCanvas } from "canvas"
-import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale"
-import { schemeCategory10 } from "d3-scale-chromatic"
+import { createCanvas } from 'canvas'
+import { scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale'
+import { schemeCategory10 } from 'd3-scale-chromatic'
 
-import { CanvasImage } from "../image/canvas-image"
-import { LineChartOptions } from "../interfaces/chart"
-import { Image } from "../interfaces/image"
-import { drawAxis } from "./utils"
+import { CanvasImage } from '../image/canvas-image'
+import { LineChartOptions } from '../interfaces/chart'
+import { Image } from '../interfaces/image'
+import { drawAxis } from './utils'
 
 export class LineChart {
 
@@ -13,8 +13,8 @@ export class LineChart {
 
   public constructor(options: Partial<LineChartOptions> = {}) {
     this.options = {
-      borderColor: options.borderColor || "#FFFFFF",
-      textColor: options.textColor || "#FFFFFF",
+      borderColor: options.borderColor || '#FFFFFF',
+      textColor: options.textColor || '#FFFFFF',
       lineColors: options.lineColors,
       width: options.width || 800,
       height: options.height || 400,
@@ -24,7 +24,7 @@ export class LineChart {
   public draw(labels: string[], datas: number[][]): Image {
     const canvas = createCanvas(this.options.width, this.options.height)
 
-    const margin = {top: 20, right: 20, bottom: 30, left: 40}
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 }
     const width = canvas.width - margin.left - margin.right
     const height = canvas.height - margin.top - margin.bottom
 
@@ -40,16 +40,16 @@ export class LineChart {
       .domain([yMin - (yMax - yMin) * 0.03, yMax])
 
     // draw
-    const context = canvas.getContext("2d")
+    const context = canvas.getContext('2d')
     context.translate(margin.left, margin.top)
 
     // draw axis
     drawAxis(context, width, height, x, y, this.options)
 
     const colorScale = scaleOrdinal(schemeCategory10)
-    const lineColors = this.options.lineColors && this.options.lineColors.length
+    const lineColors = this.options.lineColors && this.options.lineColors.length > 0
       ? this.options.lineColors && this.options.lineColors
-      : datas.map((_, index) => colorScale(index + ""))
+      : datas.map((_, index) => colorScale(`${index}`))
     const xWidth = x.bandwidth() / 2
     datas.forEach((data, dataIndex) => {
       context.beginPath()

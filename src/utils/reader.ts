@@ -1,6 +1,6 @@
-import { Readable } from "stream"
+import { Readable } from 'stream'
 
-import { reader } from "../constants/reader"
+import { reader } from '../constants/reader'
 
 export function readCsvStream<P>(stream: Readable): Promise<P> {
   return reader.csv.readStream(stream)

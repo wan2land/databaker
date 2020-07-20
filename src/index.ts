@@ -1,16 +1,16 @@
 
-export { reader } from "./constants/reader"
+export { reader } from './constants/reader'
 
-export * from "./interfaces/chart"
-export * from "./interfaces/image"
-export * from "./interfaces/reader"
+export * from './interfaces/chart'
+export * from './interfaces/image'
+export * from './interfaces/reader'
 
-export { CanvasImage } from "./image/canvas-image"
+export { CanvasImage } from './image/canvas-image'
 
-export { CsvReader } from "./reader/csv-reader"
+export { CsvReader } from './reader/csv-reader'
 
-export { BarChart } from "./chart/bar-chart"
-export { LineChart } from "./chart/line-chart"
+export { BarChart } from './chart/bar-chart'
+export { LineChart } from './chart/line-chart'
 
-export * from "./utils/reader"
-export  * from "./utils/stream"
+export * from './utils/reader'
+export * from './utils/stream'

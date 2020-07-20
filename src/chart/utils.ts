@@ -1,5 +1,5 @@
-import { rgb } from "d3-color"
-import { ScaleBand, ScaleLinear } from "d3-scale"
+import { rgb } from 'd3-color'
+import { ScaleBand, ScaleLinear } from 'd3-scale'
 
 
 export function drawAxis(
@@ -36,19 +36,19 @@ export function drawAxis(
     context.lineTo(width, yPx)
   })
   borderColor.opacity = 0.2
-  context.strokeStyle = borderColor + ""
+  context.strokeStyle = `${borderColor}`
   context.stroke()
 
   context.fillStyle = options.textColor
-  context.textAlign = "center"
-  context.textBaseline = "top"
+  context.textAlign = 'center'
+  context.textBaseline = 'top'
   x.domain().forEach((label) => {
     context.fillText(label, x(label)! + x.bandwidth() / 2, height + 7)
   })
 
-  context.textAlign = "right"
-  context.textBaseline = "middle"
+  context.textAlign = 'right'
+  context.textBaseline = 'middle'
   yTicks.forEach((d) => {
-    context.fillText(d + "", -9, y(d))
+    context.fillText(`${d}`, -9, y(d))
   })
 }
